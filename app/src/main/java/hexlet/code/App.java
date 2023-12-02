@@ -28,4 +28,3 @@ public class App implements Callable<Integer> {
         new CommandLine(new App()).execute(args);
     }
 }
-// /home/snswd/IdeaProjects/JAVA/testData

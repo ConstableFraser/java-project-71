@@ -11,16 +11,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Differ {
-    public static void generate(String format, String filePath1, String filePath2) {
-        // System.out.println("result: " + format + " " + filePath1 + " " + filePath2);
+    public static String generate(String format, String filePath1, String filePath2) {
         Map<String, Object> dict1 = null;
         Map<String, Object> dict2 = null;
-        final String INDENT = "  ";
+        final String indent = "  ";
 
         try {
             dict1 = getData(filePath1);
             dict2 = getData(filePath2);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Set<String> keys = new TreeSet<>(dict1.keySet());
@@ -28,25 +27,22 @@ public class Differ {
         StringBuilder result = new StringBuilder();
 
         for (String key : keys) {
-            if (dict1.containsKey(key) && dict2.containsKey(key)){
+            if (dict1.containsKey(key) && dict2.containsKey(key)) {
                 if (dict1.get(key).equals(dict2.get(key))) {
-                    result.append(INDENT + "  ").append(key).append(": ").append(dict1.get(key));
-                    result.append("\n");
+                    result.append(indent + "  ").append(key).append(": ").append(dict1.get(key));
                 } else {
-                    result.append(INDENT + "- ").append(key).append(": ").append(dict1.get(key));
-                    result.append("\n");
-                    result.append(INDENT + "+ ").append(key).append(": ").append(dict2.get(key));
-                    result.append("\n");
+                    result.append(indent + "- ").append(key).append(": ").append(dict1.get(key));
+                    result.append("\\n");
+                    result.append(indent + "+ ").append(key).append(": ").append(dict2.get(key));
                 }
             } else if (dict1.containsKey(key)) {
-                result.append(INDENT + "- ").append(key).append(": ").append(dict1.get(key));
-                result.append("\n");
+                result.append(indent + "- ").append(key).append(": ").append(dict1.get(key));
             } else {
-                result.append(INDENT + "+ ").append(key).append(": ").append(dict2.get(key));
-                result.append("\n");
+                result.append(indent + "+ ").append(key).append(": ").append(dict2.get(key));
             }
+            result.append("\\n");
         }
-        System.out.println("{\n".concat(String.valueOf(result)).concat("}"));
+        return "{\\n".concat(String.valueOf(result)).concat("}\\n");
     }
 
     public static Map<String, Object> getData(String readFilePath) throws Exception {
@@ -57,6 +53,6 @@ public class Differ {
         }
         String json = Files.readString(path);
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, new TypeReference<>(){});
+        return objectMapper.readValue(json, new TypeReference<>() { });
     }
 }
