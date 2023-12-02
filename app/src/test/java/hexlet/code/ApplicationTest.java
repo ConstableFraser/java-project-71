@@ -43,6 +43,6 @@ class ApplicationTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result != null ? result.toString() : "";
+        return result.toString();
     }
 }
