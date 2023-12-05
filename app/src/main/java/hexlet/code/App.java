@@ -20,7 +20,7 @@ public class App implements Callable<Integer> {
     private String format;
     @Override
     public Integer call() {
-        Differ.generate(format, filePath1, filePath2);
+        System.out.println(Differ.generate(format, filePath1, filePath2));
         return 0;
     }
 

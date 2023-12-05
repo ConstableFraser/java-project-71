@@ -1,11 +1,5 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,14 +11,16 @@ public class Differ {
         final String indent = "  ";
 
         try {
-            dict1 = getData(filePath1);
-            dict2 = getData(filePath2);
+            dict1 = Parser.getData(filePath1);
+            dict2 = Parser.getData(filePath2);
         } catch (Exception e) {
             e.printStackTrace();
         }
         Set<String> keys = new TreeSet<>(dict1.keySet());
         keys.addAll(dict2.keySet());
         StringBuilder result = new StringBuilder();
+        result.append("{");
+        result.append(System.getProperty("line.separator"));
 
         for (String key : keys) {
             if (dict1.containsKey(key) && dict2.containsKey(key)) {
@@ -32,7 +28,7 @@ public class Differ {
                     result.append(indent + "  ").append(key).append(": ").append(dict1.get(key));
                 } else {
                     result.append(indent + "- ").append(key).append(": ").append(dict1.get(key));
-                    result.append("\\n");
+                    result.append(System.getProperty("line.separator"));
                     result.append(indent + "+ ").append(key).append(": ").append(dict2.get(key));
                 }
             } else if (dict1.containsKey(key)) {
@@ -40,19 +36,8 @@ public class Differ {
             } else {
                 result.append(indent + "+ ").append(key).append(": ").append(dict2.get(key));
             }
-            result.append("\\n");
+            result.append(System.getProperty("line.separator"));
         }
-        return "{\\n".concat(String.valueOf(result)).concat("}\\n");
-    }
-
-    public static Map<String, Object> getData(String readFilePath) throws Exception {
-        Path path = Paths.get(readFilePath).toAbsolutePath().normalize();
-
-        if (!Files.exists(path)) {
-            throw new Exception("File '" + path + "' does not exist");
-        }
-        String json = Files.readString(path);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, new TypeReference<>() { });
+        return result.append("}").toString();
     }
 }
