@@ -20,7 +20,7 @@ public class Formatter {
             default:
                 throw new IllegalStateException("Unexpected value: " + format);
         }
-        return ""; //DELETE!
+        return ""; //TODO
     }
     private static String stylish(Map<String, LinkedList<Object>> modelData) {
         final String indent = "  ";
