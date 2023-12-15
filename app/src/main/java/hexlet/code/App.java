@@ -16,11 +16,12 @@ public class App implements Callable<Integer> {
     @Parameters(index = "1", description = "path to second file")
     private String filePath2;
 
-    @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
+    @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: stylish")
     private String format;
     @Override
     public Integer call() {
-        System.out.println(Differ.generate(format, filePath1, filePath2));
+        var model = Differ.generate(filePath1, filePath2);
+        System.out.println(Formatter.print(model, format));
         return 0;
     }
 

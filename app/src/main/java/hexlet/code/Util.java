@@ -15,7 +15,7 @@ public class Util {
             while ((line = bufferedReader.readLine()) != null) {
                 result.append(line);
                 if (bufferedReader.ready()) {
-                    result.append(System.getProperty("line.separator"));
+                    result.append(System.lineSeparator());
                 }
             }
             bufferedReader.close();

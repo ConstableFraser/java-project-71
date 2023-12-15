@@ -7,3 +7,4 @@
 ### Aciinema records:
 [![asciicast](https://asciinema.org/a/623862.svg)](https://asciinema.org/a/623862)
 [![asciicast](https://asciinema.org/a/625293.svg)](https://asciinema.org/a/625293)
+[![asciicast](https://asciinema.org/a/626968.svg)](https://asciinema.org/a/626968)
