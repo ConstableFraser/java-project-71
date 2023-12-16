@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.LinkedHashMap;
 
 public class Differ {
-    public static Map<String, LinkedList<Object>> generate(String filePath1, String filePath2) {
+    public static String generate(String filePath1, String filePath2, String format) {
         Map<String, Object> dict1 = null;
         Map<String, Object> dict2 = null;
         LinkedHashMap<String, LinkedList<Object>> model = new LinkedHashMap<>();
@@ -19,7 +19,7 @@ public class Differ {
             e.printStackTrace();
         }
         if (dict1 == null || dict2 == null) {
-            return model;
+            return "";
         }
         Set<String> keys = new TreeSet<>(dict1.keySet());
         keys.addAll(dict2.keySet());
@@ -50,6 +50,6 @@ public class Differ {
                 model.put(key, list);
             }
         }
-        return model;
+        return Formatter.print(model, format);
     }
 }

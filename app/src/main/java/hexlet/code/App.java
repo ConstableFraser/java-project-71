@@ -20,8 +20,8 @@ public class App implements Callable<Integer> {
     private String format;
     @Override
     public Integer call() {
-        var model = Differ.generate(filePath1, filePath2);
-        System.out.println(Formatter.print(model, format));
+        var model = Differ.generate(filePath1, filePath2, format);
+        System.out.println(model);
         return 0;
     }
 
