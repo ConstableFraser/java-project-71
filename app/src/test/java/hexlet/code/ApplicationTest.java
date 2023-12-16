@@ -8,11 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ApplicationTest {
     private String expectedStylish;
     private String expectedPlain;
+    private String expectedJson;
 
     @BeforeEach
     public void setUp() {
         expectedStylish = Util.readFile("src/test/resources/expectedStylish.txt");
         expectedPlain = Util.readFile("src/test/resources/expectedPlain.txt");
+        expectedJson = Util.readFile("src/test/resources/expectedJson.txt");
     }
 
     @Test
@@ -45,5 +47,21 @@ class ApplicationTest {
         String file2 = "src/test/resources/fileY2.yaml";
         var actual = Differ.generate(file1, file2, "plain");
         assertEquals(expectedPlain, actual);
+    }
+
+    @Test
+    void testDifferJsonJson() {
+        String file1 = "src/test/resources/fileJ1.json";
+        String file2 = "src/test/resources/fileJ2.json";
+        var actual = Differ.generate(file1, file2, "json");
+        assertEquals(expectedJson, actual);
+    }
+
+    @Test
+    void testDifferJsonYaml() {
+        String file1 = "src/test/resources/fileY1.yaml";
+        String file2 = "src/test/resources/fileY2.yaml";
+        var actual = Differ.generate(file1, file2, "json");
+        assertEquals(expectedJson, actual);
     }
 }

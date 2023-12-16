@@ -13,4 +13,5 @@
 [![asciicast](https://asciinema.org/a/626968.svg)](https://asciinema.org/a/626968)
 #### step #9 ####
 [![asciicast](https://asciinema.org/a/627228.svg)](https://asciinema.org/a/627228)
-
+#### step #10 ####
+[![asciicast](https://asciinema.org/a/627237.svg)](https://asciinema.org/a/627237)
