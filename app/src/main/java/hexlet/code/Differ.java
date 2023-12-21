@@ -7,6 +7,10 @@ import java.util.LinkedList;
 import java.util.LinkedHashMap;
 
 public class Differ {
+    public static String generate(String filePath1, String filePath2) {
+        return Differ.generate(filePath1, filePath2, "stylish");
+    }
+
     public static String generate(String filePath1, String filePath2, String format) {
         Map<String, Object> dict1 = null;
         Map<String, Object> dict2 = null;
