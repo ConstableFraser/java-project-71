@@ -17,7 +17,6 @@ public class Stylish {
             var node = item.getKey();
             var value = item.getValue().get(0);
             var type = item.getValue().get(1);
-
             output.append(System.lineSeparator());
             output.append(indent);
 
