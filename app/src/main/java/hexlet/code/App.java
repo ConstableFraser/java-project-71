@@ -6,6 +6,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.util.concurrent.Callable;
+
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
         description = "Compares two configuration files and shows a difference.")
 public class App implements Callable<Integer> {
@@ -18,6 +19,7 @@ public class App implements Callable<Integer> {
 
     @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: stylish")
     private String format;
+
     @Override
     public Integer call() {
         var model = Differ.generate(filePath1, filePath2, format);

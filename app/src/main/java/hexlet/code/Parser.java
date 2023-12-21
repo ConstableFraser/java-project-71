@@ -18,13 +18,13 @@ public class Parser {
         }
         String data = Files.readString(path);
 
-        if (path.toString().endsWith(".json")) {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(data, new TypeReference<>() { });
-        } else if (path.toString().endsWith(".yaml")) {
-            ObjectMapper mapper = new YAMLMapper();
-            return mapper.readValue(data, new TypeReference<>() { });
-        }
-        return null;
+        var filePath = path.toString();
+        var fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
+        ObjectMapper mapper = switch (fileExtension) {
+            case "json" -> new ObjectMapper();
+            case "yaml" -> new YAMLMapper();
+            default -> throw new Error("Unknown file extension: " + fileExtension);
+        };
+        return mapper.readValue(data, new TypeReference<>() { });
     }
 }

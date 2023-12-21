@@ -27,7 +27,7 @@ public class Stylish {
                 output.append(ADDED);
             } else if (type.equals("deleted")) {
                 output.append(DELETED);
-            } else if (type.equals("modified")) {
+            } else {
                 output.append(DELETED).append(" ").append(node).append(": ").append(value);
                 output.append(System.lineSeparator());
                 output.append(indent);

@@ -11,20 +11,20 @@ public class Plain {
         for (Map.Entry<String, LinkedList<Object>> item : modelData.entrySet()) {
             var node = item.getKey();
             var value = item.getValue().get(0);
-            var type = item.getValue().get(1);
+            var typeNode = item.getValue().get(1);
 
-            if (type.equals("nochanges")) {
+            if (typeNode.equals("nochanges")) {
                 continue;
             }
 
             output.append("Property '").append(node).append("' was ");
 
-            if (type.equals("added")) {
+            if (typeNode.equals("added")) {
                 output.append("added").append(" with value: ");
                 output.append(normalize(value));
-            } else if (type.equals("deleted")) {
+            } else if (typeNode.equals("deleted")) {
                 output.append("removed");
-            } else if (type.equals("modified")) {
+            } else {
                 output.append("updated. ");
                 var value1 = normalize(value);
                 var value2 = normalize(item.getValue().get(2));
@@ -39,11 +39,13 @@ public class Plain {
     private static String normalize(Object value) {
         if (value.equals("null")) {
             return "null";
-        } else if (value instanceof Boolean) {
+        }
+
+        if (value instanceof Boolean || value instanceof Integer) {
             return String.valueOf(value);
-        } else if (value instanceof Integer) {
-            return String.valueOf(value);
-        } else if (value instanceof String) {
+        }
+
+        if (value instanceof String) {
             return String.format("'" + value + "'");
         }
         return "[complex value]";

@@ -19,35 +19,36 @@ public class Differ {
             e.printStackTrace();
         }
         if (dict1 == null || dict2 == null) {
-            return "";
+            var fileError = dict1 == null ? filePath1 : filePath2;
+            throw new Error("Error reading file: " + fileError);
         }
         Set<String> keys = new TreeSet<>(dict1.keySet());
         keys.addAll(dict2.keySet());
 
-        for (String key : keys) {
-            var value1 = dict1.get(key) == null ? "null" : dict1.get(key);
-            var value2 = dict2.get(key) == null ? "null" : dict2.get(key);
-            var list = new LinkedList<>();
+        for (String node : keys) {
+            var value1 = dict1.get(node) == null ? "null" : dict1.get(node);
+            var value2 = dict2.get(node) == null ? "null" : dict2.get(node);
+            var nodeInfo = new LinkedList<>();
 
-            if (dict1.containsKey(key) && dict2.containsKey(key)) {
+            if (dict1.containsKey(node) && dict2.containsKey(node)) {
                 if (value1.equals(value2)) {
-                    list.add(value1);
-                    list.add("nochanges");
-                    model.put(key, list);
+                    nodeInfo.add(value1);
+                    nodeInfo.add("nochanges");
+                    model.put(node, nodeInfo);
                 } else {
-                    list.add(value1);
-                    list.add("modified");
-                    list.add(value2);
-                    model.put(key, list);
+                    nodeInfo.add(value1);
+                    nodeInfo.add("modified");
+                    nodeInfo.add(value2);
+                    model.put(node, nodeInfo);
                 }
-            } else if (dict1.containsKey(key)) {
-                list.add(value1);
-                list.add("deleted");
-                model.put(key, list);
+            } else if (dict1.containsKey(node)) {
+                nodeInfo.add(value1);
+                nodeInfo.add("deleted");
+                model.put(node, nodeInfo);
             } else {
-                list.add(value2);
-                list.add("added");
-                model.put(key, list);
+                nodeInfo.add(value2);
+                nodeInfo.add("added");
+                model.put(node, nodeInfo);
             }
         }
         return Formatter.print(model, format);

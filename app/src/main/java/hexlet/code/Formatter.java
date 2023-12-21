@@ -13,7 +13,7 @@ public class Formatter {
             case "stylish" -> Stylish.format(modelData);
             case "plain" -> Plain.format(modelData);
             case "json" -> Json.format(modelData);
-            default -> throw new IllegalStateException("Unexpected value: " + format);
+            default -> throw new Error("Unexpected value: " + format);
         };
     }
 }
