@@ -39,10 +39,15 @@ class ApplicationTest {
             + "src/test/resources/expectedJson.txt,"
             + "json"})
     void testCorrectGenerateDiffFormatsStylishPlainJson(ArgumentsAccessor argumentsAccessor) {
-        String file1 = argumentsAccessor.getString(0);
-        String file2 = argumentsAccessor.getString(1);
-        String expected = Util.readFile(argumentsAccessor.getString(2));
-        String format = argumentsAccessor.getString(3);
+        int filePath1 = 0;
+        int filePath2 = 1;
+        int indexExpected = 2;
+        int fileExtension = 3;
+
+        String file1 = argumentsAccessor.getString(filePath1);
+        String file2 = argumentsAccessor.getString(filePath2);
+        String expected = Util.readFile(argumentsAccessor.getString(indexExpected));
+        String format = argumentsAccessor.getString(fileExtension);
 
         var actual = Differ.generate(file1, file2, format);
         assertEquals(expected, actual);
