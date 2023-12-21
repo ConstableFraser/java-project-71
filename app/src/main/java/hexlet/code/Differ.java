@@ -50,11 +50,7 @@ public class Differ {
         if (inDict1Present && inDict2Present) {
             return value1.equals(value2) ? "nochanges" : "modified";
         }
-
-        if (inDict1Present) {
-            return "deleted";
-        }
-        return "added";
+        return inDict1Present ? "deleted" : "added";
     }
 
     private static void makeNodeInfo(List<Object> nodeInfo, Object value1, String typeOfNode, Object value2) {
