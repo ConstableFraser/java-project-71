@@ -13,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ApplicationTest {
+    private static final int FILEPATH1 = 0;
+    private static final int FILEPATH2 = 1;
+    private static final int EXPECTED = 2;
+    private static final int FILEEXTENSION = 3;
     @ParameterizedTest
     @CsvSource({"src/test/resources/fileJ1.json,"
             + "src/test/resources/fileJ2.json,"
@@ -39,15 +43,10 @@ class ApplicationTest {
             + "src/test/resources/expectedJson.txt,"
             + "json"})
     void testCorrectGenerateDiffFormatsStylishPlainJson(ArgumentsAccessor argumentsAccessor) {
-        int filePath1 = 0;
-        int filePath2 = 1;
-        int indexExpected = 2;
-        int fileExtension = 3;
-
-        String file1 = argumentsAccessor.getString(filePath1);
-        String file2 = argumentsAccessor.getString(filePath2);
-        String expected = Util.readFile(argumentsAccessor.getString(indexExpected));
-        String format = argumentsAccessor.getString(fileExtension);
+        String file1 = argumentsAccessor.getString(FILEPATH1);
+        String file2 = argumentsAccessor.getString(FILEPATH2);
+        String expected = Util.readFile(argumentsAccessor.getString(EXPECTED));
+        String format = argumentsAccessor.getString(FILEEXTENSION);
 
         var actual = Differ.generate(file1, file2, format);
         assertEquals(expected, actual);
