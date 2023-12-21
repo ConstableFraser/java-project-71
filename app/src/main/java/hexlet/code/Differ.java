@@ -2,6 +2,7 @@ package hexlet.code;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.LinkedList;
 import java.util.LinkedHashMap;
@@ -33,28 +34,47 @@ public class Differ {
             var value1 = dict1.get(node) == null ? "null" : dict1.get(node);
             var value2 = dict2.get(node) == null ? "null" : dict2.get(node);
             var nodeInfo = new LinkedList<>();
-
-            if (dict1.containsKey(node) && dict2.containsKey(node)) {
-                if (value1.equals(value2)) {
-                    nodeInfo.add(value1);
-                    nodeInfo.add("nochanges");
-                    model.put(node, nodeInfo);
-                } else {
-                    nodeInfo.add(value1);
-                    nodeInfo.add("modified");
-                    nodeInfo.add(value2);
-                    model.put(node, nodeInfo);
-                }
-            } else if (dict1.containsKey(node)) {
-                nodeInfo.add(value1);
-                nodeInfo.add("deleted");
-                model.put(node, nodeInfo);
-            } else {
-                nodeInfo.add(value2);
-                nodeInfo.add("added");
-                model.put(node, nodeInfo);
-            }
+            var typeOfNode = getTypeOfNode(dict1, dict2, node);
+            makeNodeInfo(nodeInfo, value1, typeOfNode, value2);
+            model.put(node, nodeInfo);
         }
         return Formatter.print(model, format);
+    }
+
+    private static String getTypeOfNode(Map<String, Object> dict1, Map<String, Object> dict2, String node) {
+        boolean inDict1Present = dict1.containsKey(node);
+        boolean inDict2Present = dict2.containsKey(node);
+        var value1 = dict1.get(node) == null ? "null" : dict1.get(node);
+        var value2 = dict2.get(node) == null ? "null" : dict2.get(node);
+
+        if (inDict1Present && inDict2Present) {
+            return value1.equals(value2) ? "nochanges" : "modified";
+        }
+
+        if (inDict1Present) {
+            return "deleted";
+        }
+        return "added";
+    }
+
+    private static void makeNodeInfo(List<Object> nodeInfo, Object value1, String typeOfNode, Object value2) {
+        switch (typeOfNode) {
+            case "modified":
+                nodeInfo.add(value1);
+                nodeInfo.add(typeOfNode);
+                nodeInfo.add(value2);
+                break;
+            case "added":
+                nodeInfo.add(value2);
+                nodeInfo.add(typeOfNode);
+                break;
+            case "deleted":
+            case "nochanges":
+                nodeInfo.add(value1);
+                nodeInfo.add(typeOfNode);
+                break;
+            default:
+                throw new Error("Unexpected type of node: " + typeOfNode);
+        }
     }
 }
