@@ -18,24 +18,24 @@ class ApplicationTest {
             + "src/test/resources/fileJ2.json,"
             + "src/test/resources/expectedStylish.txt,"
             + "stylish",
-                "src/test/resources/fileY1.yaml,"
-            + "src/test/resources/fileY2.yaml,"
+                "src/test/resources/fileY1.yml,"
+            + "src/test/resources/fileY2.yml,"
             + "src/test/resources/expectedStylish.txt,"
             + "stylish",
                 "src/test/resources/fileJ1.json,"
             + "src/test/resources/fileJ2.json,"
             + "src/test/resources/expectedPlain.txt,"
             + "plain",
-                "src/test/resources/fileY1.yaml,"
-            + "src/test/resources/fileY2.yaml,"
+                "src/test/resources/fileY1.yml,"
+            + "src/test/resources/fileY2.yml,"
             + "src/test/resources/expectedPlain.txt,"
             + "plain",
                 "src/test/resources/fileJ1.json,"
             + "src/test/resources/fileJ2.json,"
             + "src/test/resources/expectedJson.txt,"
             + "json",
-                "src/test/resources/fileY1.yaml,"
-            + "src/test/resources/fileY2.yaml,"
+                "src/test/resources/fileY1.yml,"
+            + "src/test/resources/fileY2.yml,"
             + "src/test/resources/expectedJson.txt,"
             + "json"})
     void testCorrectGenerateDiffFormatsStylishPlainJson(ArgumentsAccessor argumentsAccessor) {
@@ -69,8 +69,8 @@ class ApplicationTest {
 
     @Test
     void testWrongFormatter() {
-        var file1 = "src/test/resources/fileY1.yaml";
-        var file2 = "src/test/resources/fileY2.yaml";
+        var file1 = "src/test/resources/fileY1.yml";
+        var file2 = "src/test/resources/fileY2.yml";
         var wrongFormatter = "noExistFormatter";
         assertThrows(Error.class, () -> Differ.generate(file1, file2, wrongFormatter));
     }

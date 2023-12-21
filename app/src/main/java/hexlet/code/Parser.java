@@ -22,7 +22,7 @@ public class Parser {
         var fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
         ObjectMapper mapper = switch (fileExtension) {
             case "json" -> new ObjectMapper();
-            case "yaml" -> new YAMLMapper();
+            case "yml" -> new YAMLMapper();
             default -> throw new Error("Unknown file extension: " + fileExtension);
         };
         return mapper.readValue(data, new TypeReference<>() { });
