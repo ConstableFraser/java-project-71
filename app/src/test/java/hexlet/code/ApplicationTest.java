@@ -32,10 +32,7 @@ class ApplicationTest {
                 "src/test/resources/fixtures/fileY1.yml,"
             + "src/test/resources/fixtures/fileY2.yml,"
             + "src/test/resources/fixtures/expectedPlain.txt,"
-            + "plain",
-                "src/test/resources/fixtures/fileY1.yml,"
-            + "src/test/resources/fixtures/fileY2.yml,"
-            + "src/test/resources/fixtures/expectedStylish.txt,"})
+            + "plain"})
     void testCorrectDifferFormatsStylishPlain(String filePath1, String filePath2, String expectedFile, String format) {
         String expected = Util.readFixture(expectedFile);
         var actual = Differ.generate(filePath1, filePath2, format);
@@ -43,7 +40,17 @@ class ApplicationTest {
     }
 
     @Test
-    void testCorrectDifferFormatJson() {
+    void testDifferWithoutFormat() {
+        String expected = Util.readFixture("src/test/resources/fixtures/expectedStylish.txt");
+
+        String filePath1 = "src/test/resources/fixtures/fileJ1.json";
+        String filePath2 = "src/test/resources/fixtures/fileJ2.json";
+        String actual = Differ.generate(filePath1, filePath2);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDifferFormatJson() {
         String expected = Util.readFixture("src/test/resources/fixtures/expectedJson.txt");
 
         String filePath1 = "src/test/resources/fixtures/fileY1.yml";
@@ -66,20 +73,16 @@ class ApplicationTest {
     @Test
     void testGetDataMethod() {
         var wrongExtendedFile = "src/test/resources/fixtures/wrongFileExtended.docx";
-        var wrongFilePath = "nonexist/filePath.zzz";
-        try {
-            assertThrows(Error.class, () -> Parser.getData(wrongExtendedFile));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertThrows(Exception.class, () -> Parser.getData(wrongFilePath));
+        assertThrows(Error.class, () -> Parser.getData("any content", wrongExtendedFile));
     }
 
     @Test
     void testWrongFormatter() {
         var file1 = "src/test/resources/fixtures/fileY1.yml";
         var file2 = "src/test/resources/fixtures/fileY2.yml";
+        var damagedFile = "src/test/resources/fixtures/damagedFile.yml";
         var wrongFormatter = "noExistFormatter";
         assertThrows(Error.class, () -> Differ.generate(file1, file2, wrongFormatter));
+        assertThrows(Error.class, () -> Differ.generate(file1, damagedFile, "yml"));
     }
 }

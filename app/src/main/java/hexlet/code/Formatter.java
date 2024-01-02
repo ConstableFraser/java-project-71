@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Formatter {
     public static String print(Map<String, LinkedList<Object>> modelData, String format) {
-        format = format == null ? "stylish" : format;
 
         return switch (format) {
             case "stylish" -> Stylish.format(modelData);
