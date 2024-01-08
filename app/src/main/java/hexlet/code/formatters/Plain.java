@@ -1,39 +1,37 @@
 package hexlet.code.formatters;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Plain {
 
-    public static String format(Map<String, LinkedList<Object>> modelData) {
-        StringBuilder output = new StringBuilder();
+    public static String format(Map<String, HashMap<String, Object>> modelData) {
+        String output = "";
 
-        for (Map.Entry<String, LinkedList<Object>> item : modelData.entrySet()) {
+        for (Map.Entry<String, HashMap<String, Object>> item : modelData.entrySet()) {
             var node = item.getKey();
-            var value = item.getValue().get(0);
-            var typeNode = item.getValue().get(1);
+            var value = item.getValue().get("value1");
+            var typeNode = item.getValue().get("type");
 
             if (typeNode.equals("nochanges")) {
                 continue;
             }
 
-            output.append("Property '").append(node).append("' was ");
-
             if (typeNode.equals("added")) {
-                output.append("added").append(" with value: ");
-                output.append(normalize(value));
+                output += "Property '" + node + "' was " + "added" + " with value: ";
+                output += normalize(value);
             } else if (typeNode.equals("deleted")) {
-                output.append("removed");
-            } else {
-                output.append("updated. ");
+                output += "Property '" + node + "' was " + "removed";
+            } else { // modified
+                output += "Property '" + node + "' was " + "updated. ";
                 var value1 = normalize(value);
-                var value2 = normalize(item.getValue().get(2));
-                output.append("From ").append(value1);
-                output.append(" to ").append(value2);
+                var value2 = normalize(item.getValue().get("value2"));
+                output += "From " + value1;
+                output += " to " + value2;
             }
-            output.append(System.lineSeparator());
+            output += "\n";
         }
-        return output.toString().trim();
+        return output.trim();
     }
 
     private static String normalize(Object value) {

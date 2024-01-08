@@ -1,15 +1,15 @@
 package hexlet.code;
 
-import java.util.Set;
 import java.util.Map;
-import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class Calculator {
-    public static Map<String, LinkedList<Object>> run(Map<String, Object> dict1, Map<String, Object> dict2) {
-        Map<String, LinkedList<Object>> model = new LinkedHashMap<>();
+
+public class TreeMaker {
+    public static Map<String, HashMap<String, Object>> run(Map<String, Object> dict1, Map<String, Object> dict2) {
+        Map<String, HashMap<String, Object>> model = new LinkedHashMap<>();
 
         Set<String> keys = new TreeSet<>(dict1.keySet());
         keys.addAll(dict2.keySet());
@@ -17,7 +17,7 @@ public class Calculator {
         for (String node : keys) {
             var value1 = checkForNull(dict1.get(node));
             var value2 = checkForNull(dict2.get(node));
-            var nodeInfo = new LinkedList<>();
+            var nodeInfo = new HashMap<String, Object>();
             var typeOfNode = getTypeOfNode(dict1, dict2, node);
             makeNodeInfo(nodeInfo, value1, typeOfNode, value2);
             model.put(node, nodeInfo);
@@ -36,21 +36,21 @@ public class Calculator {
         return inDict1Present ? "deleted" : "added";
     }
 
-    private static void makeNodeInfo(List<Object> nodeInfo, Object value1, String typeOfNode, Object value2) {
+    private static void makeNodeInfo(Map<String, Object> nodeInfo, Object value1, String typeOfNode, Object value2) {
         switch (typeOfNode) {
             case "modified":
-                nodeInfo.add(value1);
-                nodeInfo.add(typeOfNode);
-                nodeInfo.add(value2);
+                nodeInfo.put("value1", value1);
+                nodeInfo.put("type", typeOfNode);
+                nodeInfo.put("value2", value2);
                 break;
             case "added":
-                nodeInfo.add(value2);
-                nodeInfo.add(typeOfNode);
+                nodeInfo.put("value1", value2);
+                nodeInfo.put("type", typeOfNode);
                 break;
             case "deleted":
             case "nochanges":
-                nodeInfo.add(value1);
-                nodeInfo.add(typeOfNode);
+                nodeInfo.put("value1", value1);
+                nodeInfo.put("type", typeOfNode);
                 break;
             default:
                 throw new Error("Unexpected type of node: " + typeOfNode);

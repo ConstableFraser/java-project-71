@@ -1,6 +1,6 @@
 package hexlet.code.formatters;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Stylish {
@@ -8,15 +8,15 @@ public class Stylish {
     private static final  String DELETED = "-";
     private static final String NOCHANGES = " ";
 
-    public static String format(Map<String, LinkedList<Object>> modelData) {
+    public static String format(Map<String, HashMap<String, Object>> modelData) {
         final String indent = "  ";
         StringBuilder output = new StringBuilder();
         output.append("{");
 
-        for (Map.Entry<String, LinkedList<Object>> item : modelData.entrySet()) {
+        for (Map.Entry<String, HashMap<String, Object>> item : modelData.entrySet()) {
             var node = item.getKey();
-            var value = item.getValue().get(0);
-            var type = item.getValue().get(1);
+            var value = item.getValue().get("value1");
+            var type = item.getValue().get("type");
             output.append(System.lineSeparator());
             output.append(indent);
 
@@ -26,11 +26,11 @@ public class Stylish {
                 output.append(ADDED);
             } else if (type.equals("deleted")) {
                 output.append(DELETED);
-            } else {
+            } else { // modified
                 output.append(DELETED).append(" ").append(node).append(": ").append(value);
                 output.append(System.lineSeparator());
                 output.append(indent);
-                output.append(ADDED).append(" ").append(node).append(": ").append(item.getValue().get(2));
+                output.append(ADDED).append(" ").append(node).append(": ").append(item.getValue().get("value2"));
                 continue;
             }
             output.append(" ").append(node).append(": ").append(value);

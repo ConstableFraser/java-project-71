@@ -5,15 +5,15 @@ import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 class ApplicationTest {
     @ParameterizedTest
@@ -65,7 +65,7 @@ class ApplicationTest {
 
     @Test
     void testExceptionParseJson() {
-        var map = new LinkedHashMap<String, LinkedList<Object>>();
+        var map = new LinkedHashMap<String, HashMap<String, Object>>();
         map.put(null, null);
         assertThrows(RuntimeException.class, () -> Json.format(map));
     }

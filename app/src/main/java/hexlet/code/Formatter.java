@@ -4,11 +4,11 @@ import hexlet.code.formatters.Stylish;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Json;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Formatter {
-    public static String print(Map<String, LinkedList<Object>> modelData, String format) {
+    public static String print(Map<String, HashMap<String, Object>> modelData, String format) {
 
         return switch (format) {
             case "stylish" -> Stylish.format(modelData);

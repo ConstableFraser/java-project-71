@@ -1,5 +1,9 @@
 package hexlet.code;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class Differ {
@@ -11,10 +15,10 @@ public class Differ {
         Map<String, Object> dict1 = null;
         Map<String, Object> dict2 = null;
 
-        var contentInput1 = InputStream.getContent(inputStream1);
-        var formatInputStream1 = InputStream.getInputFormat(inputStream1);
-        var contentInput2 = InputStream.getContent(inputStream2);
-        var formatInputStream2 = InputStream.getInputFormat(inputStream2);
+        var contentInput1 = getContent(inputStream1);
+        var formatInputStream1 = getInputFormat(inputStream1);
+        var contentInput2 = getContent(inputStream2);
+        var formatInputStream2 = getInputFormat(inputStream2);
 
         try {
             dict1 = Parser.getData(contentInput1, formatInputStream1);
@@ -27,8 +31,22 @@ public class Differ {
             var fileError = dict1 == null ? inputStream1 : inputStream2;
             throw new Error("Error reading file: " + fileError);
         }
-
-        var model = Calculator.run(dict1, dict2);
+        var model = TreeMaker.run(dict1, dict2);
         return Formatter.print(model, formatOutput);
+    }
+
+    public static String getContent(String inputStream) {
+        Path path = Paths.get(inputStream).toAbsolutePath().normalize();
+
+        try {
+            return Files.readString(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getInputFormat(String inputStream) {
+        String path = Paths.get(inputStream).toAbsolutePath().normalize().toString();
+        return path.substring(path.lastIndexOf(".") + 1);
     }
 }
