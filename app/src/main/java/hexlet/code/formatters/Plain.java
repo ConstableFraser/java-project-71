@@ -6,7 +6,7 @@ import java.util.Map;
 public class Plain {
 
     public static String format(Map<String, HashMap<String, Object>> modelData) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
 
         for (Map.Entry<String, HashMap<String, Object>> item : modelData.entrySet()) {
             var node = item.getKey();
@@ -18,20 +18,20 @@ public class Plain {
             }
 
             if (typeNode.equals("added")) {
-                output += "Property '" + node + "' was " + "added" + " with value: ";
-                output += normalize(value);
+                output.append("Property '").append(node).append("' was ").append("added").append(" with value: ");
+                output.append(normalize(value));
             } else if (typeNode.equals("deleted")) {
-                output += "Property '" + node + "' was " + "removed";
+                output.append("Property '").append(node).append("' was ").append("removed");
             } else { // modified
-                output += "Property '" + node + "' was " + "updated. ";
+                output.append("Property '").append(node).append("' was ").append("updated. ");
                 var value1 = normalize(value);
                 var value2 = normalize(item.getValue().get("value2"));
-                output += "From " + value1;
-                output += " to " + value2;
+                output.append("From ").append(value1);
+                output.append(" to ").append(value2);
             }
-            output += "\n";
+            output.append("\n");
         }
-        return output.trim();
+        return output.toString().trim();
     }
 
     private static String normalize(Object value) {
