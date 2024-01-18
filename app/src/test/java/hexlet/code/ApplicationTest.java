@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +36,7 @@ class ApplicationTest {
         String actual;
         try {
             actual = Differ.generate(filePath1, filePath2, format);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         assertEquals(expected, actual);
@@ -52,7 +51,7 @@ class ApplicationTest {
         String actual;
         try {
             actual = Differ.generate(filePath1, filePath2);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         assertEquals(expected, actual);
@@ -67,7 +66,7 @@ class ApplicationTest {
         String actual;
         try {
             actual = Differ.generate(filePath1, filePath2, "json");
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         try {

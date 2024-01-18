@@ -1,7 +1,5 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,13 +7,13 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 public class Differ {
-    public static String generate(String filePath1, String filePath2) throws JsonProcessingException {
+    public static String generate(String filePath1, String filePath2) throws Exception {
         return Differ.generate(filePath1, filePath2, "stylish");
     }
 
     public static String generate(String inputStream1,
                                   String inputStream2,
-                                  String formatOutput) throws JsonProcessingException {
+                                  String formatOutput) throws Exception {
         var contentInput1 = getContent(inputStream1);
         var formatInputStream1 = getInputFormat(inputStream1);
         var contentInput2 = getContent(inputStream2);
