@@ -35,7 +35,7 @@ public class Plain {
     }
 
     private static String normalize(Object value) {
-        if (value.equals("null")) {
+        if (value == null) {
             return "null";
         }
 

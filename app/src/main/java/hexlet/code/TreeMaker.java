@@ -2,8 +2,9 @@ package hexlet.code;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.Objects;
 import java.util.HashMap;
+import java.util.TreeSet;
 import java.util.LinkedHashMap;
 
 
@@ -15,8 +16,8 @@ public class TreeMaker {
         keys.addAll(dict2.keySet());
 
         for (String node : keys) {
-            var value1 = checkForNull(dict1.get(node));
-            var value2 = checkForNull(dict2.get(node));
+            var value1 = dict1.get(node);
+            var value2 = dict2.get(node);
             var nodeInfo = new HashMap<String, Object>();
             var typeOfNode = getTypeOfNode(dict1, dict2, node);
             makeNodeInfo(nodeInfo, value1, typeOfNode, value2);
@@ -24,14 +25,15 @@ public class TreeMaker {
         }
         return model;
     }
+
     private static String getTypeOfNode(Map<String, Object> dict1, Map<String, Object> dict2, String node) {
         boolean inDict1Present = dict1.containsKey(node);
         boolean inDict2Present = dict2.containsKey(node);
-        var value1 = checkForNull(dict1.get(node));
-        var value2 = checkForNull(dict2.get(node));
+        var value1 = dict1.get(node);
+        var value2 = dict2.get(node);
 
         if (inDict1Present && inDict2Present) {
-            return value1.equals(value2) ? "nochanges" : "modified";
+            return Objects.equals(value1, value2) ? "nochanges" : "modified";
         }
         return inDict1Present ? "deleted" : "added";
     }
@@ -55,9 +57,5 @@ public class TreeMaker {
             default:
                 throw new Error("Unexpected type of node: " + typeOfNode);
         }
-    }
-
-    private static Object checkForNull(Object o) {
-        return o == null ? "null" : o;
     }
 }

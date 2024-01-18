@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Formatter {
-    public static String print(Map<String, HashMap<String, Object>> modelData, String format) {
+    public static String format(Map<String, HashMap<String, Object>> modelData, String format) {
 
         return switch (format) {
             case "stylish" -> Stylish.format(modelData);
