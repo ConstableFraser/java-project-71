@@ -1,6 +1,6 @@
 ## Description
-Educational project
-Program with CLI (command line interface) to calculate the difference between two data sources of different formats (**json**, **yml**)
+Educational project\
+Program with CLI (command line interface) to calculate the difference between two data sources of different formats (**json**, **yml**)\
 The calculation result can be presented in three formats: **plain**, **stylish** and **json**
 
 ## Tech skills
